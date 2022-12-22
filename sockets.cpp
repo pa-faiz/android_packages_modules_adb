@@ -158,7 +158,7 @@ static SocketFlushResult local_socket_flush_incoming(asocket* s) {
     }
 
     // If we sent the last packet of a closing socket, we can now destroy it.
-    if (s->closing) {
+    if (s->closing && !fd_full) {
         s->close(s);
         return SocketFlushResult::Destroyed;
     }
@@ -371,7 +371,7 @@ static void local_socket_close(asocket* s) {
     /* otherwise, put on the closing list
     */
     D("LS(%d): closing", s->id);
-    s->closing = 1;
+    s->closing = true;
     fdevent_del(s->fde, FDE_READ);
     remove_socket(s);
     D("LS(%d): put on socket_closing_list fd=%d", s->id, s->fd);
