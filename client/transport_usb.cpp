@@ -178,9 +178,9 @@ bool is_adb_interface(int usb_class, int usb_subclass, int usb_protocol) {
 }
 
 bool should_use_libusb() {
-    bool enable = true;
-#if defined(_WIN32)
-    enable = false;
+    bool enable = false;
+#if defined(__APPLE__)
+    enable = true;
 #endif
     char* env = getenv("ADB_LIBUSB");
     if (env) {
