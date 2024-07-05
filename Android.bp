@@ -880,6 +880,8 @@ cc_test {
         "liblog",
     ],
 
+    version_script: "adbd_test.map",
+    stl: "libc++_static",
     static_libs: ADBD_TEST_LIBS,
 
     // Shared lib versions of static libs can potentially come from
@@ -914,6 +916,7 @@ python_test_host {
     name: "adb_integration_test_device",
     main: "test_device.py",
     srcs: [
+        "proto/app_processes.proto",
         "proto/devices.proto",
         "test_device.py",
     ],
@@ -929,6 +932,10 @@ python_test_host {
     test_options: {
         unit_test: false,
     },
+    data: [
+        ":adb_test_app1",
+        ":adb_test_app2",
+    ],
 }
 
 // Note: using pipe for xxd to control the variable name generated
