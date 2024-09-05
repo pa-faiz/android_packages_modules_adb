@@ -807,14 +807,8 @@ phony {
         "libadbd_fs",
         "abb",
         "reboot",
+        "remount",
     ],
-    product_variables: {
-        debuggable: {
-            required: [
-                "remount",
-            ],
-        },
-    },
 }
 
 phony {
